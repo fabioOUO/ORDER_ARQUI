@@ -6,6 +6,8 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Label;
+import java.awt.TextArea;
 
 /**
  *
@@ -13,15 +15,27 @@ import java.awt.Color;
  */
 public class FileSelector extends javax.swing.JFrame {
 
+    private final Label label;
+    private final TextArea textArea;
+    private final int tipo;
+
     /**
      * Creates new form FileSelector
+     * @param tipo
+     * @param label
+     * @param textArea
      */
-    public FileSelector() {
+    
+    
+    public FileSelector(int tipo, Label label, TextArea textArea) {
         initComponents();
         this.getContentPane().setBackground(Color.BLACK);
         this.setSize(1000, 800);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        this.label = (Label) label;
+        this.textArea = (TextArea) textArea;
+        this.tipo = (int) tipo;
     }
 
     /**
@@ -36,11 +50,16 @@ public class FileSelector extends javax.swing.JFrame {
         jFileChooser1 = new javax.swing.JFileChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setAlwaysOnTop(true);
+        setMaximumSize(null);
+        setMinimumSize(null);
         setPreferredSize(new java.awt.Dimension(1000, 800));
+        setResizable(false);
 
         jFileChooser1.setApproveButtonText("Selecionar");
         jFileChooser1.setApproveButtonToolTipText("");
         jFileChooser1.setBackground(new java.awt.Color(0, 204, 204));
+        jFileChooser1.setDialogTitle("");
         jFileChooser1.setFileHidingEnabled(true);
         jFileChooser1.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
         jFileChooser1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -48,28 +67,46 @@ public class FileSelector extends javax.swing.JFrame {
         jFileChooser1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jFileChooser1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jFileChooser1.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
-        jFileChooser1.setMinimumSize(new java.awt.Dimension(1000, 800));
-        jFileChooser1.setPreferredSize(new java.awt.Dimension(1000, 800));
+        jFileChooser1.setFocusable(false);
+        jFileChooser1.setMaximumSize(null);
+        jFileChooser1.setMinimumSize(new java.awt.Dimension(600, 600));
+        jFileChooser1.setPreferredSize(new java.awt.Dimension(600, 600));
+        jFileChooser1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFileChooser1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addGap(52, 52, 52)
+                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(135, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
+                .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
+        if(tipo == 1){
+            this.label.setText((this.jFileChooser1.getSelectedFile()).toString());
+            this.textArea.setText(this.textArea.getText() + "Caminho de Origem --> " + (this.jFileChooser1.getSelectedFile()).toString() + "\n");
+        }else if(tipo == 2){
+            this.label.setText((this.jFileChooser1.getSelectedFile()).toString());
+            this.textArea.setText(this.textArea.getText() + "Caminho de Destino --> " + (this.jFileChooser1.getSelectedFile()).toString() + "\n");
+        }
+        this.dispose();
+    }//GEN-LAST:event_jFileChooser1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -101,7 +138,7 @@ public class FileSelector extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FileSelector().setVisible(true);
+                new FileSelector(0, new Label(), new TextArea()).setVisible(true);
             }
         });
     }
